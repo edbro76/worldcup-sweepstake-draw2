@@ -162,6 +162,10 @@ function spin(id, arr, finalValue, callback){
 function drawNext(){
   if(!players.length || drawing) return;
 
+  document.getElementById('playerWheel').textContent='—';
+  document.getElementById('potAWheel').textContent='—';
+  document.getElementById('potBWheel').textContent='—';
+
   const music=document.getElementById('bgMusic');
   if(!musicStarted){
     music.play();
@@ -194,11 +198,6 @@ function drawNext(){
           .insertAdjacentHTML('beforeend',row);
 
         document.getElementById('progress').textContent=count;
-
-        document.getElementById('playerWheel').textContent='—';
-        document.getElementById('potAWheel').textContent='—';
-        document.getElementById('potBWheel').textContent='—';
-
         drawing=false;
       });
     });
