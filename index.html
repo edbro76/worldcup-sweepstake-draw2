@@ -5,10 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>2026 World Cup Sweepstake Draw</title>
 <style>
-body{background:linear-gradient(135deg,#0f172a,#1e3a8a,#0ea5e9);color:#111;}
-.container{background:rgba(255,255,255,0.95);padding:20px;border-radius:24px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
-.completeBanner{display:none;text-align:center;font-size:36px;font-weight:bold;padding:20px;margin-top:20px;border-radius:20px;background:linear-gradient(90deg,#facc15,#fde68a);animation:pulse 1s infinite;}
-@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.03)}100%{transform:scale(1)}}
 .wheel{border-radius:50%;aspect-ratio:1/1;display:flex;flex-direction:column;justify-content:center;align-items:center;background:radial-gradient(circle,#ffffff 0%,#dbeafe 70%,#93c5fd 100%);border:6px solid #1d4ed8;transition:transform 0.6s ease;}
 .wheel.spin{transform:rotate(720deg);}
 .copyBtn{background:#16a34a;color:#fff;} 
@@ -43,7 +39,6 @@ th,td{padding:10px;border:1px solid #ddd;text-align:left}
 <thead><tr><th>#</th><th>Player</th><th>Pot A</th><th>Pot B</th></tr></thead>
 <tbody id="resultsBody"></tbody>
 </table>
-<div id="completeBanner" class="completeBanner">🏆 DRAW COMPLETE 🏆</div>
 </div>
 <script>
 const initialPlayers=['Audrey','Ed','Liz','Andy','Carys','Mike','Steve B','Mary','June','Ray','Ian M','Margaret M','Jean','Elaine','Trevor','Sheila','Dave','Roy 1','Roy 2','Maria','Gill','Len','Fiona','Craig'];
@@ -56,14 +51,14 @@ function spin(id, arr, finalValue, cb){let ticks=0; const el=document.getElement
 function drawNext(){if(!players.length)return; const p=randomItem(players), a=randomItem(potA), b=randomItem(potB);
 spin('playerWheel',players,p,()=>{}); spin('potAWheel',potA,a,()=>{}); spin('potBWheel',potB,b,()=>{
 players=players.filter(x=>x!==p); potA=potA.filter(x=>x!==a); potB=potB.filter(x=>x!==b); count++;
-const row=`<tr><td>${count}</td><td>${p}</td><td>${a}</td><td>${b}</td></tr>`; document.getElementById('resultsBody').insertAdjacentHTML('beforeend',row); document.getElementById('progress').textContent=count; if(count===24){document.getElementById('completeBanner').style.display='block';}
+const row=`<tr><td>${count}</td><td>${p}</td><td>${a}</td><td>${b}</td></tr>`; document.getElementById('resultsBody').insertAdjacentHTML('beforeend',row); document.getElementById('progress').textContent=count;
 });}
 function copyResults(){
 const rows=[...document.querySelectorAll('#resultsBody tr')].map(r=>[...r.children].map(td=>td.innerText).join(' | ')).join('
 ');
 navigator.clipboard.writeText(rows); alert('Results copied to clipboard');
 }
-function resetAll(){players=[...initialPlayers]; potA=[...potASeed]; potB=[...potBSeed]; count=0; document.getElementById('resultsBody').innerHTML=''; document.getElementById('progress').textContent='0'; document.getElementById('playerWheel').textContent='—'; document.getElementById('potAWheel').textContent='—'; document.getElementById('potBWheel').textContent='—'; document.getElementById('completeBanner').style.display='none';}
+function resetAll(){players=[...initialPlayers]; potA=[...potASeed]; potB=[...potBSeed]; count=0; document.getElementById('resultsBody').innerHTML=''; document.getElementById('progress').textContent='0'; document.getElementById('playerWheel').textContent='—'; document.getElementById('potAWheel').textContent='—'; document.getElementById('potBWheel').textContent='—';}
 </script>
 </body>
 </html>
