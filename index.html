@@ -106,6 +106,10 @@ th,td{
 </table>
 </div>
 
+<audio id="bgMusic" loop>
+  <source src="themetune.mp3" type="audio/mpeg">
+</audio>
+
 <script>
 const initialPlayers=[
   'Audrey','Ed','Liz','Andy','Carys','Mike','Steve B','Mary',
@@ -133,32 +137,15 @@ let potA=[...potASeed];
 let potB=[...potBSeed];
 let count=0;
 let drawing=false;
+let musicStarted=false;
 
 function randomItem(arr){
   return arr[Math.floor(Math.random()*arr.length)];
 }
 
-function drumRoll(duration=5000){
-  const ctx=new(window.AudioContext||window.webkitAudioContext)();
-  const interval=setInterval(()=>{
-    const osc=ctx.createOscillator();
-    const gain=ctx.createGain();
-    osc.type='triangle';
-    osc.frequency.value=100;
-    gain.gain.value=0.03;
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.start();
-    osc.stop(ctx.currentTime+0.08);
-  },120);
-
-  setTimeout(()=>clearInterval(interval),duration);
-}
-
 function spin(id, arr, finalValue, callback){
   const el=document.getElementById(id);
   let ticks=0;
-  drumRoll(5000);
 
   const interval=setInterval(()=>{
     el.textContent=randomItem(arr);
@@ -174,6 +161,13 @@ function spin(id, arr, finalValue, callback){
 
 function drawNext(){
   if(!players.length || drawing) return;
+
+  const music=document.getElementById('bgMusic');
+  if(!musicStarted){
+    music.play();
+    musicStarted=true;
+  }
+
   drawing=true;
 
   const selectedPlayer=randomItem(players);
@@ -200,6 +194,11 @@ function drawNext(){
           .insertAdjacentHTML('beforeend',row);
 
         document.getElementById('progress').textContent=count;
+
+        if(count===24){
+          music.pause();
+        }
+
         drawing=false;
       });
     });
@@ -212,6 +211,11 @@ function resetAll(){
   potB=[...potBSeed];
   count=0;
   drawing=false;
+  musicStarted=false;
+
+  const music=document.getElementById('bgMusic');
+  music.pause();
+  music.currentTime=0;
 
   document.getElementById('resultsBody').innerHTML='';
   document.getElementById('progress').textContent='0';
