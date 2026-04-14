@@ -195,9 +195,9 @@ function drawNext(){
 
         document.getElementById('progress').textContent=count;
 
-        if(count===24){
-          music.pause();
-        }
+        document.getElementById('playerWheel').textContent='—';
+        document.getElementById('potAWheel').textContent='—';
+        document.getElementById('potBWheel').textContent='—';
 
         drawing=false;
       });
