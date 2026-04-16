@@ -151,7 +151,7 @@ function spin(id, arr, finalValue, callback){
     el.textContent=randomItem(arr);
     ticks++;
 
-    if(ticks>=50){
+    if(ticks>=30){
       clearInterval(interval);
       el.textContent=finalValue;
       if(callback) callback();
